@@ -2,24 +2,23 @@
 
 namespace Oneup\FlysystemBundle\Tests\Model;
 
-use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ContainerAwareTestCase extends WebTestCase
 {
-    /**
-     * @var Client
-     */
+    use SetUpTearDownTrait;
+
     protected $client;
     protected static $container;
 
-    public function setUp()
+    private function doSetUp()
     {
         $this->client = static::createClient();
         self::$container = $this->client->getContainer();
     }
 
-    public function tearDown()
+    private function doTearDown()
     {
         parent::tearDown();
 

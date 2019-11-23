@@ -8,6 +8,7 @@ use League\Flysystem\MountManager;
 use Oneup\FlysystemBundle\DependencyInjection\OneupFlysystemExtension;
 use Oneup\FlysystemBundle\StreamWrapper\StreamWrapperManager;
 use Oneup\FlysystemBundle\Tests\Model\ContainerAwareTestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OneupFlysystemExtensionTest extends ContainerAwareTestCase
@@ -47,6 +48,10 @@ class OneupFlysystemExtensionTest extends ContainerAwareTestCase
         $this->assertEquals(AdapterInterface::VISIBILITY_PUBLIC, $filesystem1->getVisibility('1/meep'));
         $this->assertEquals(AdapterInterface::VISIBILITY_PUBLIC, $filesystem2->getVisibility('2/meep'));
         $this->assertEquals(AdapterInterface::VISIBILITY_PRIVATE, $filesystem3->getVisibility('3/meep'));
+
+        $filesystem1->delete('1/meep');
+        $filesystem2->delete('2/meep');
+        $filesystem3->delete('3/meep');
     }
 
     public function testDisableAssertsSetting()
@@ -77,11 +82,10 @@ class OneupFlysystemExtensionTest extends ContainerAwareTestCase
         $this->assertInstanceOf('League\Flysystem\Filesystem', $mountManager->getFilesystem('prefix'));
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testIfOnlyConfiguredFilesystemsAreMounted()
     {
+        $this->expectException(\LogicException::class);
+
         /** @var MountManager $mountManager */
         $mountManager = self::$container->get('oneup_flysystem.mount_manager');
 
@@ -135,12 +139,13 @@ class OneupFlysystemExtensionTest extends ContainerAwareTestCase
 
     /**
      * @dataProvider provideDefectiveStreamWrapperConfigurations
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      *
      * @param array $streamWrapperConfig
      */
     public function testIfDefectiveStreamWrapperConfiguration(array $streamWrapperConfig)
     {
+        $this->expectException(InvalidConfigurationException::class);
+
         $this->loadExtension([
             'oneup_flysystem' => [
                 'adapters' => [

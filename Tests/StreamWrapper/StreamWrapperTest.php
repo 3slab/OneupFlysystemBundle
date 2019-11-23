@@ -5,9 +5,12 @@ namespace Oneup\FlysystemBundle\Tests\StreamWrapper;
 
 use League\Flysystem\FilesystemInterface;
 use Oneup\FlysystemBundle\Tests\Model\ContainerAwareTestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class StreamWrapperTest extends ContainerAwareTestCase
 {
+    use SetUpTearDownTrait;
+
     public function testStreamWrapperForMyFilesystem()
     {
         $this->markTestSkipped('Undefined index: OneupFlysystemBundle/Tests/StreamWrapper/StreamWrapperTest.php:19');
@@ -26,7 +29,7 @@ class StreamWrapperTest extends ContainerAwareTestCase
         $this->assertEquals($content, stream_get_contents($filesystem->readStream($path)));
     }
 
-    public function tearDown()
+    private function doTearDown()
     {
         $this->assertContains('myfilesystem', stream_get_wrappers());
 
