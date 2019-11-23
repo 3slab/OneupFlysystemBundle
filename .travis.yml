@@ -31,4 +31,4 @@ before_script:
   - travis_wait composer require symfony/framework-bundle:${SYMFONY_VERSION} --prefer-source
   - travis_wait composer install --dev --prefer-source
 
-script: ./vendor/bin/simple-phpunit
+script: ./vendor/bin/phpunit
