@@ -3,7 +3,7 @@ framework:
     secret: secret
     default_locale: en
     session: ~
-    test: ~
+    test: true
     trusted_hosts: ~
 
 oneup_flysystem:

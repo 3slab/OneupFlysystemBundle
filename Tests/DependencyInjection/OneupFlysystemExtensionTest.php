@@ -45,9 +45,9 @@ class OneupFlysystemExtensionTest extends ContainerAwareTestCase
         $filesystem2->write('2/meep', 'meep\'s content');
         $filesystem3->write('3/meep', 'meep\'s content');
 
-        $this->assertContains($filesystem1->getVisibility('1/meep'), ['0644', AdapterInterface::VISIBILITY_PUBLIC]);
-        $this->assertContains($filesystem1->getVisibility('2/meep'), ['0644', AdapterInterface::VISIBILITY_PUBLIC]);
-        $this->assertContains($filesystem1->getVisibility('3/meep'), ['0644', AdapterInterface::VISIBILITY_PRIVATE]);
+        $this->assertContains($filesystem1->getVisibility('1/meep'), [0644, AdapterInterface::VISIBILITY_PUBLIC]);
+        $this->assertContains($filesystem1->getVisibility('2/meep'), [0644, AdapterInterface::VISIBILITY_PUBLIC]);
+        $this->assertContains($filesystem1->getVisibility('3/meep'), [0644, AdapterInterface::VISIBILITY_PRIVATE]);
 
         $filesystem1->delete('1/meep');
         $filesystem2->delete('2/meep');
